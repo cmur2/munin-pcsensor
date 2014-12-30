@@ -18,6 +18,10 @@ if [ "${1}" = "config" ]; then
 	echo "temp.label temperatue"
 	echo "temp.type GAUGE"
 else
-	echo -n "temp.value "
-	${PCSENSOR} -cm | head -n1
+	TEMP=`${PCSENSOR} -cm`
+	if [[ $? != 0 ]]; then
+		sleep 1
+		TEMP=`${PCSENSOR} -cm`
+	fi
+	echo "temp.value $TEMP"
 fi
