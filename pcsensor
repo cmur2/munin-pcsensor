@@ -20,8 +20,12 @@ if [ "${1}" = "config" ]; then
 else
 	TEMP=`${PCSENSOR} -cm`
 	if [[ $? != 0 ]]; then
-		sleep 1
+		sleep 2
 		TEMP=`${PCSENSOR} -cm`
+		if [[ $? != 0 ]]; then
+			sleep 6
+			TEMP=`${PCSENSOR} -cm`
+		fi
 	fi
 	echo "temp.value $TEMP"
 fi
